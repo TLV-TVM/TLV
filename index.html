@@ -106,6 +106,7 @@
 				});
 				
 				google.maps.event.addDomListener(document, 'load', initialize);
+				$("#itineraireShow").append("Lat: "+IciLat+" Long: "+IciLong+" Pt départ: "+PtDepart).css('color', '#000000');
 		 }; 
 	 
 		function errorCallback(error){
