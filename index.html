@@ -48,7 +48,6 @@
 				var map;
 				
 				var PtDepart = new google.maps.LatLng(IciLat ,IciLong);
-				$("#itineraireShow").append("Position Départ: "+PtDepart);
 				google.maps.visualRefresh = true;
 	
 				function initialize() {
@@ -106,7 +105,7 @@
 						calcRoute();
 				});
 				
-				google.maps.event.addDomListener(window, 'load', initialize);
+				google.maps.event.addDomListener(document, 'load', initialize);
 		 }; 
 	 
 		function errorCallback(error){
