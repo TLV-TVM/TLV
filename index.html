@@ -40,7 +40,7 @@
 			
 			IciLat =position.coords.latitude ;
 			IciLong = position.coords.longitude;
-			$("#itineraireShow").append("Position Latitude: "+IciLat+" Position Longitude: "+IciLong).css('color', '#000000');
+			
 			  $('#from').val(IciLat + "," + IciLong);
 			  
 				var directionsDisplay;
@@ -48,7 +48,7 @@
 				var map;
 				
 				var PtDepart = new google.maps.LatLng(IciLat ,IciLong);
-				
+				$("#itineraireShow").append("Position Départ: "+PtDepart);
 				google.maps.visualRefresh = true;
 	
 				function initialize() {
@@ -144,7 +144,7 @@
 			  	var mapOptions = {
 					zoom: 16,
 					mapTypeId: google.maps.MapTypeId.ROADMAP,
-					center: PtDepart,
+					center: PtDepart2,
 					disableDefaultUI: true
 			  	}
 			  	map2 = new google.maps.Map(document.getElementById('laCarte'), mapOptions);
