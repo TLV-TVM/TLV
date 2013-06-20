@@ -43,7 +43,7 @@ html, body {
 }
 #footer-tlv div { display: inline-block; }
 #footer-tlv .bgfooterleft,#footer-tlv .bgfooterright {
-	height: 96px;
+	height: 95px;
 	position: absolute;
 	background: transparent url(../images/footer-repeat.gif) repeat-x 0 40px !important;
 }
