@@ -30,13 +30,13 @@
 		var IciLong;
 		var map = null; 
 		
-		$(document).ready(function() {
-			if (navigator.geolocation){
-	 	  		navigator.geolocation.getCurrentPosition(successCallback, errorCallback, { maximumAge: 3000, timeout:5000, enableHighAccuracy: true });
-			}else{
-			  	alert("Votre navigateur ne prend pas en compte la géolocalisation HTML5");
-			}
-		});
+		
+		if (navigator.geolocation){
+ 	  		navigator.geolocation.getCurrentPosition(successCallback, errorCallback, { maximumAge: 3000, timeout:5000, enableHighAccuracy: true });
+		}else{
+		  	alert("Votre navigateur ne prend pas en compte la géolocalisation HTML5");
+		}
+		
 		
 		function successCallback(position){
 			
@@ -106,11 +106,11 @@
 					calcRoute();
 			});
 			
-			
+			$(document).ready(function() {
 				initialize();
-			
+				alert('Lancement');
+			});
 			//google.maps.event.addDomListener(document, 'load', initialize);
-			$("#itineraireShow").append("Lat: "+IciLat+" Long: "+IciLong+" Pt départ: "+PtDepart).css('color', '#000000');
 		 }; 
 	 
 		function errorCallback(error){
