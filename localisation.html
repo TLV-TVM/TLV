@@ -1,0 +1,332 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>TLV TVM</title>
+	
+	<meta name="viewport" content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0, user-scalable=no"  >
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<link rel="apple-touch-startup-image" href="img/jqt_startup.png" />
+	<link rel="apple-touch-icon" href="img/jqtouch.png" />
+	<link rel="apple-touch-icon" sizes="72x72" href="img/jqtouch.png" /><!-- 72x72-->
+	<link rel="apple-touch-icon" sizes="114x114" href="img/jqtouch.png" /><!-- 114x144-->
+	
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css" />
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
+	
+	<!-- jQuery UI Map v3 -->
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
+	
+	<link rel="stylesheet" type="text/css" href="css/jqm-calendar.css" /> 
+	<link rel="stylesheet" href="css/main.css" />
+	
+	<script type="text/javascript">
+		/*
+		 * Fonction de géolocalisation
+		 */
+		
+		var IciLat;
+		var IciLong;
+		var map = null; 
+		
+		$(document).ready(function() {
+			if (navigator.geolocation){
+	 	  		navigator.geolocation.getCurrentPosition(successCallback, errorCallback, { maximumAge: 3000, timeout:5000, enableHighAccuracy: true });
+			}else{
+			  	alert("Votre navigateur ne prend pas en compte la géolocalisation HTML5");
+			}
+		});
+		
+		function successCallback(position){
+			
+			IciLat =position.coords.latitude ;
+			IciLong = position.coords.longitude;
+			
+			$('#from').val(IciLat + "," + IciLong);
+			  
+			var directionsDisplay;
+			var directionsService = new google.maps.DirectionsService();
+			
+			var PtDepart = new google.maps.LatLng(IciLat ,IciLong);
+			google.maps.visualRefresh = true;
+
+			function initialize() {
+			  directionsDisplay = new google.maps.DirectionsRenderer();
+			  var mapOptions = {
+				zoom: 16,
+				mapTypeId: google.maps.MapTypeId.ROADMAP,
+				center: PtDepart,
+				disableDefaultUI: true
+			  }
+			  var map = new google.maps.Map(document.getElementById('laCarte'), mapOptions);
+			  directionsDisplay.setMap(map);
+			
+ 			 directionsDisplay.setPanel(document.getElementById('itineraireShow'));
+			  
+			  var marker = new google.maps.Marker({
+				  position: PtDepart,
+				  map: map 
+			  });
+			  
+			}
+				
+			function calcRoute() {
+			  
+			  $("#itineraireShow").html('');
+			  
+			  var EndPoint;
+			  EndPoint = $("#endPoint :selected").val().split(',');
+			  
+			 var destinaTionTlv = new google.maps.LatLng(EndPoint[0], EndPoint[1]);
+			 
+			 
+			  var selectedMode = document.getElementById('mode').value;
+			  var request = {
+				  origin: PtDepart,
+				  destination: destinaTionTlv,
+				 // route : 'itineraireShow', 
+				  // Note that Javascript allows us to access the constant
+				  // using square brackets and a string value as its
+				  // "property."
+				  travelMode: google.maps.TravelMode[selectedMode]
+			  };
+			  directionsService.route(request, function(response, status) {
+				if (status == google.maps.DirectionsStatus.OK) {
+				  directionsDisplay.setDirections(response);
+				}
+			  });
+			  
+			  var documentBody = (($.browser.chrome)||($.browser.safari)) ? document.body : document.documentElement;
+			  $(documentBody).animate({scrollTop: $('#itineraireShow').offset().top-90}, 2000);
+			}
+			
+			///btn itineraire
+			$("input[name=CalcItin]").click(function(){
+					calcRoute();
+			});
+			
+			
+				initialize();
+			
+			//google.maps.event.addDomListener(document, 'load', initialize);
+			$("#itineraireShow").append("Lat: "+IciLat+" Long: "+IciLong+" Pt départ: "+PtDepart).css('color', '#000000');
+		 }; 
+	 
+		function errorCallback(error){
+		  switch(error.code){
+			case error.PERMISSION_DENIED:
+			  //alert("L'utilisateur n'a pas autorisé l'accès à sa position");
+			  $("#itineraireShow").append("L'utilisateur n'a pas autorisé l'accès à sa position").css('color', '#000000');
+			  
+			  break;     
+			case error.POSITION_UNAVAILABLE:
+			  //alert("L'emplacement de l'utilisateur n'a pas pu être déterminé");
+			  $("#itineraireShow").append("L'emplacement de l'utilisateur n'a pas pu être déterminé").css('color', '#000000');
+			  
+			  break;
+			case error.TIMEOUT:
+			  //alert("Le service n'a pas répondu à temps");
+			  $("#itineraireShow").append("Le service n'a pas répondu à temps").css('color', '#000000');
+			  
+			  break;
+			}
+		};
+	</script>
+ 
+</head>
+
+<body class="portrait">
+<!-- GEOLOC -->
+<div data-role="page" id="geoLoc" data-add-back-btn="true">
+	<div data-role="header" data-position="fixed">
+		<div id="header-tlv"><img src="images/logo-tlv.png"  height="45" /></div>
+		<a data-role="button" data-direction="reverse" data-rel="back" href="#home" data-icon="arrow-l" data-iconpos="left" style="margin-top:4px">Accueil</a>
+      	<div id="header-sub-tlv">porquerolles <span class="tiret">-</span> port cros <span class="tiret">-</span> le levant</div>
+	</div>
+	
+	<div data-role="content" class="page-content-tlv">
+		<h2>Itin&eacute;raires</h2>
+		<p>
+			Pour vous rendre &agrave; la Tour Fondue ou au Port de Hy&egrave;res en bus, consultez les horaires sur:<br />
+			<a href="#" id="appli" style="width: 78px; margin: 5px auto; display: block;"><img src="images/bus_mistral.png" alt="Application Bus Mistral" style="vertical-align: top;" /></a>
+		</p>
+		<p>
+			<label>De :</label> 
+			<div class="ui-btn ui-shadow ui-btn-corner-all ui-btn-icon-right ui-btn-up-c" style="line-height: 38px;font-family: Helvetica,Arial,sans-serif; font-weight: bold; font-size: 16px; border-radius: 1em;">Ma position actuelle</div>
+			<input id="from"   type="hidden" value="" />
+		</p>
+		<p>
+			<label>A :</label>
+			<select name="endPoint" id="endPoint">
+				<option value="43.0822795,6.1569269">Le Port d'Hyeres</option>
+				<option value="43.0280560,6.1550942">La Tour Fondue</option>
+				<option value="43.003111,6.200658">Embarcad&egrave;re Porquerolles</option>
+				<option value="43.009719,6.382637">Embarcad&egrave;re Port Cros</option>
+				<option value="43.015454,6.434434">Embarcad&egrave;re Levant</option>
+			</select>
+		</p>
+		<p>
+			<label>Moyen de transport :</label>
+			<select id="mode" onchange="calcRoute();">
+				<option value="DRIVING">Voiture</option>
+				<option value="WALKING">Pieton</option>
+				<option value="BICYCLING">V&eacute;lo</option>
+			</select>
+		</p>
+		<div class="bouton_submit">
+			<input type="button" id="CalcItin" class="bt-valid"  name="CalcItin"  data-icon="search" value="Voir l'itin&eacute;raire">
+		</div>
+		<p>&nbsp;</p>
+		<div id="itineraireShow" style="color:#FFF"> </div><p>&nbsp;</p>
+		<div id="laCarte" style="border:1px solid #FFF;height:280px;width:320px;margin:auto"> </div>
+	</div>
+	
+	<script type="text/javascript">
+		if (navigator.userAgent.match(/android/i)) {
+			$("#appli").attr('href', 'https://play.google.com/store/apps/details?id=fr.cityway.android.rmtt');
+		} else if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/iPad/i)) {
+			$("#appli").attr('href', 'https://itunes.apple.com/fr/app/reseau-mistral/id429896529?mt=8');
+		}
+	</script>			 
+  
+  
+	<div data-role="footer" data-position="fixed" id="footer-tlv"><div class="bgfooterleft">&nbsp;</div><div id="imgfooter"><img src="img/footer.png" id="img-footer" /></div><div class="bgfooterright">&nbsp;</div></div>
+  
+</div>
+<!-- FIN GEOLOC -->
+<script type="text/javascript" charset="utf-8">
+
+	$(document).bind("mobileinit", function(){
+		$.mobile.touchOverflowEnabled = true;
+	  	$.mobile.orientationChangeEnabled = false;
+	  	$.mobile.allowCrossDomainPages = true;
+	});
+
+    //cache the viewport tag if the user is using an iPhone
+    var $viewport = $('head').children('meta[name="viewport"]');
+
+    //bind an event handler to the window object for the orientationchange event
+    $(window).bind('orientationchange', function() {
+        if (window.orientation == 90 || window.orientation == -90 || window.orientation == 270) {
+
+            // Orientation landscape
+            $viewport.attr('content', 'height=device-width,width=device-height,initial-scale=1.0,maximum-scale=1.0');
+			$("body").removeClass("portrait");
+			$("body").addClass("landscape");
+			$("body").css("landscape");
+			$("#img-footer").attr("src","img/footer-landscape.png");
+			$("#nav-home").css('margin-top','0px');
+			$("#footer-tlv").css('display','none');
+			/*
+			$('body').css('background-image', 'url("img/bg-appli-landscape.png")');
+			
+			$('body').css(
+			{	'background-image':'url(img/bg-appli-landscape.png) !important ',
+				'background-color':'#004787  !important',
+				'background-repeat':'no-repeat  !important',
+				' background-position':'center center  !important ',
+				' background-attachment':'scroll !important ',
+				'background-size':'100% 100% !important '
+			});
+			*/
+			/*$('.ui-content').css(
+			{	'background-image':'url(img/images/TLV-BG-MER.jpg) !important ',
+				'background-color':'#004d91  !important',
+				'background-repeat':'repeat-x  !important',
+				' background-position':'top left  !important ',
+				' background-attachment':'scroll !important '
+			});*/
+        } else {
+
+            // Orientation Portrait
+            $viewport.attr('content', 'height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0');
+			
+			$("body").removeClass("landscape");
+			$("body").addClass("portrait");
+ 
+			$("#img-footer").attr("src","img/footer.png");
+			$("#nav-home").css('margin-top','110px');
+			$("#footer-tlv").css('display','');
+			/*
+			$('body').css('background-image', 'url("img/bg-appli.png")');
+			
+			$('body').css(
+			{	'background-image':'url(img/bg-appli.png) !important ',
+				'background-color':'#004787  !important',
+				'background-repeat':'no-repeat  !important',
+				' background-position':'center center  !important ',
+				' background-attachment':'scroll !important ',
+				'background-size':'100% 100% !important '
+			});
+			*/
+			/*$('.ui-content').css(
+			{	'background-image':'url(img/bg-appli-content.png) !important ',
+				'background-color':'#004787  !important',
+				'background-repeat':'no-repeat  !important',
+				' background-position':'center center  !important ',
+				' background-attachment':'scroll !important ',
+				'background-size':'100% 100% !important '
+			});*/
+        }
+
+    //trigger an orientationchange event on the window object to initialize this code (basically in-case the user opens the page in landscape mode)
+    }).trigger('orientationchange');
+
+	// Verrouillage portrait
+	function shouldRotateToOrientation(interfaceOrientation) {
+	    return (1 === interfaceOrientation);
+	}		
+
+	// Check de l'horaire pour les transports
+	$("#btnHoraireGo").click(function(){
+		$("#infoHoraire").html("&nbsp;");
+		var idCatLieux = $('select[name=lieu_depart] option:selected').val();
+		var DateDep = $('input[name=date_depart]').val();
+		// alert("DateDep = "+DateDep);
+		
+		var DateTxt = DateDep.split('/');
+			var jour = DateTxt[0];
+			var mois = DateTxt[1];
+			var an = DateTxt[2];
+			
+			$.ajax({
+			  url: 'http://www.tlv-tvm.com/iphone/checkHoraire.php',
+			  type: "POST",
+			  data:{idch:idCatLieux, datedep: ''+an+'-'+mois+'-'+jour },
+			  success: function(htmlReturn) {
+				$('#infoHoraire').html(htmlReturn);
+	 		  }
+			});
+		
+	})
+	
+	// Calcul de largeur de l'écran pour le footer
+	var largeurFooter = 0;
+	var NavLar = $(document).width();
+	largeurFooter = (NavLar - 320) / 2;
+	//largeurFooter = largeurFooter + ' px';
+	$("#footer-tlv .bgfooterleft").css({
+		'width': largeurFooter,
+		'left': 0
+	});
+	$("#footer-tlv .bgfooterright").css({
+		'width': largeurFooter,
+		'right': 0
+	});
+	
+	// Affichage de la date dans le formulaire
+	var date = new Date();
+	var dateJour = date.getDate();
+	var dateMois = date.getMonth()+1;
+	if (dateMois < 10) {
+		dateMois = "0"+dateMois;
+	}
+	var dateAnnee = date.getFullYear();
+	var futDate=dateJour + "/" + dateMois + "/" + dateAnnee;
+	$("#date_depart").val(futDate);
+	
+</script>
+
+</body>
+</html>
