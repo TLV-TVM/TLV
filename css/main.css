@@ -1,9 +1,6 @@
 /* CSS Document */
 html, body {
     height : 100%;
-	/*margin:0px;padding:0px; */
-	/*background-color:#004d91 !important;*/ 
-
 }
 @font-face {
     font-family: 'apex_newmedium';
@@ -37,13 +34,13 @@ html, body {
 
 #footer-tlv{  
 	text-align:center; 
-	height: 96px;
+	height: 95px;
 	border-top:0px;
 	background:none!important;
 }
 #footer-tlv div { display: inline-block; }
 #footer-tlv .bgfooterleft,#footer-tlv .bgfooterright {
-	height: 95px;
+	height: 96px;
 	position: absolute;
 	background: transparent url(../images/footer-repeat.gif) repeat-x 0 40px !important;
 }
@@ -59,22 +56,9 @@ html, body {
  
 body.portrait{
 	 background:#004d91 url(../images/TLV-BG-MER.jpg) repeat-x !important;
-   /* background: url(img/bg-appli.png) !important ;
-    background-repeat:no-repeat  !important ;
-    background-position:center center  !important ;
-    background-attachment:scroll !important ;
-    background-size:100% 100% !important ;*/
- 
 }
 body.landscape{
 	background: #004d91 url(../images/TLV-BG-MER.jpg) repeat-x !important;
-	/*background-color: #035295 !important;*/
- 	/*background-color:#004484 !important;
- 	background: url(img/bg-appli-landscape.png) !important ;  !important;
-    background-repeat:no-repeat  !important ;
-    background-position:center center  !important ;
-    background-attachment:scroll !important ;
-    background-size:100% 100% !important ;*/
 }
 .ui-page {
     background: #004485 !important;
@@ -83,14 +67,7 @@ body.landscape{
 	background: url(../images/bateau-seul.png) center 85px no-repeat !important;
 }
 .page-tlv{
-/*    background: transparent;*/
-	/*height:auto !important;*/
 	border:#00FF00 0px solid;
-	/*background: url(../img/bg-appli-content.png)   !important ;*/
-	/*background: url(../images/TLV-BG-MER.jpg) !important ;
-	background-repeat:repeat-x !important;
- 	background-size:cover;*/
-	/*min-height:480px;*/
 	color:#FFFFFF; 
 	font-family:'apex_newmedium'; 
 	font-size:11px; 

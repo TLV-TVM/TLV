@@ -85,10 +85,6 @@
 			  var request = {
 				  origin: PtDepart,
 				  destination: destinaTionTlv,
-				 // route : 'itineraireShow', 
-				  // Note that Javascript allows us to access the constant
-				  // using square brackets and a string value as its
-				  // "property."
 				  travelMode: google.maps.TravelMode[selectedMode]
 			  };
 			  directionsService.route(request, function(response, status) {
@@ -108,7 +104,6 @@
 			
 			$(document).ready(function() {
 				initialize();
-				alert('Lancement');
 			});
 			//google.maps.event.addDomListener(document, 'load', initialize);
 		 }; 
@@ -116,15 +111,12 @@
 		function errorCallback(error){
 		  switch(error.code){
 			case error.PERMISSION_DENIED:
-			  //alert("L'utilisateur n'a pas autorisé l'accès à sa position");
 			  $("#itineraireShow").append("L'utilisateur n'a pas autorisé l'accès à sa position").css('color', '#000000');
 			  break;     
 			case error.POSITION_UNAVAILABLE:
-			  //alert("L'emplacement de l'utilisateur n'a pas pu être déterminé");
 			  $("#itineraireShow").append("L'emplacement de l'utilisateur n'a pas pu être déterminé").css('color', '#000000');
 			  break;
 			case error.TIMEOUT:
-			  //alert("Le service n'a pas répondu à temps");
 			  $("#itineraireShow").append("Le service n'a pas répondu à temps").css('color', '#000000');
 			  break;
 			}
@@ -577,25 +569,7 @@
 			$("#img-footer").attr("src","img/footer-landscape.png");
 			$("#nav-home").css('margin-top','0px');
 			$("#footer-tlv").css('display','none');
-			/*
-			$('body').css('background-image', 'url("img/bg-appli-landscape.png")');
-			
-			$('body').css(
-			{	'background-image':'url(img/bg-appli-landscape.png) !important ',
-				'background-color':'#004787  !important',
-				'background-repeat':'no-repeat  !important',
-				' background-position':'center center  !important ',
-				' background-attachment':'scroll !important ',
-				'background-size':'100% 100% !important '
-			});
-			*/
-			/*$('.ui-content').css(
-			{	'background-image':'url(img/images/TLV-BG-MER.jpg) !important ',
-				'background-color':'#004d91  !important',
-				'background-repeat':'repeat-x  !important',
-				' background-position':'top left  !important ',
-				' background-attachment':'scroll !important '
-			});*/
+			$("#footer-tlv").hide();			
         } else {
 
             // Orientation Portrait
@@ -607,26 +581,7 @@
 			$("#img-footer").attr("src","img/footer.png");
 			$("#nav-home").css('margin-top','110px');
 			$("#footer-tlv").css('display','');
-			/*
-			$('body').css('background-image', 'url("img/bg-appli.png")');
 			
-			$('body').css(
-			{	'background-image':'url(img/bg-appli.png) !important ',
-				'background-color':'#004787  !important',
-				'background-repeat':'no-repeat  !important',
-				' background-position':'center center  !important ',
-				' background-attachment':'scroll !important ',
-				'background-size':'100% 100% !important '
-			});
-			*/
-			/*$('.ui-content').css(
-			{	'background-image':'url(img/bg-appli-content.png) !important ',
-				'background-color':'#004787  !important',
-				'background-repeat':'no-repeat  !important',
-				' background-position':'center center  !important ',
-				' background-attachment':'scroll !important ',
-				'background-size':'100% 100% !important '
-			});*/
         }
 
     //trigger an orientationchange event on the window object to initialize this code (basically in-case the user opens the page in landscape mode)
