@@ -630,6 +630,14 @@
 		'width': largeurFooter,
 		'right': 0
 	});
+	if(!navigator.userAgent.match(/iPhone/i)){
+		$("#laCarte").css({
+			'width': NavLar
+		});
+	}
+	
+	
+	
 	
 	// Affichage de la date dans le formulaire
 	var date = new Date();
