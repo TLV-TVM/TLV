@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns = "http://www.w3.org/ns/widgets"
+xmlns:gap = "http://phonegap.com/ns/1.0"
+id = "com.tlvtvm"
+version = "1.1"
+versionCode = "1">
+
+    <name>TLV Compagnies Maritimes</name>
+
+    <description>
+        Nos sociétés assurent la desserte au départ de la tour fondu et du port de Hyères. Elles contribuent à maintenir un pont maritime qui assure la continuité territoriale entre les îles et le continent. Notre mission favorise l’activité touristique et le développement économique de ces îles d’exception.
+    </description>
+
+    <author href="http://tlv-tvm.com" email="support@comet-studio.com">
+        Comet Studio
+</author>
+        
+    <!-- ICONS -->
+        
+    <icon src="icon.png" /> <!-- default 72 pixels -->
+        
+    <icon src="icon57.png" gap:platform="ios" width="57" height="57" /> <!-- iPhone 3G, 3GS, iPod Touch 2G, 3G -->
+    <icon src="icon72.png" gap:platform="ios" width="72" height="72" /> <!-- iPad 1, 2, iPad mini -->
+    <icon src="icon114.png" gap:platform="ios" width="114" height="114" /> <!-- iPhone 4, 4S, iPod Touch 4G -->
+    <icon src="icon144.png" gap:platform="ios" width="144" height="144" /> <!-- iPad 3, 4 -->
+    <!-- GENERAL PREFERENCES -->
+        
+    <preference name="phonegap-version" value="2.9.0" />
+    <preference name="orientation" value="default" />
+    <preference name="target-device" value="universal" />
+    <preference name="fullscreen" value="true" /> <!-- remove the upper bar on iOS and Android -->
+        
+    <!-- iOS PREFERENCES -->
+        
+    <preference name="webviewbounce" value="false" />
+    <preference name="prerendered-icon" value="true" />
+    <preference name="stay-in-webview" value="false" />
+    <preference name="ios-statusbarstyle" value="black-opaque" />
+    <preference name="detect-data-types" value="false" />
+    <preference name="exit-on-suspend" value="false" />
+    <preference name="show-splash-screen-spinner" value="false" />
+    <preference name="auto-hide-splash-screen" value="true" /> <!-- if set to false, the splash screen must be hidden using a JavaScript API -->
+        
+    <!-- ANDROID PREFERENCES -->
+        
+    <preference name="android-minSdkVersion" value="7" /> <!-- minimum Android 2.1 -->
+    <!-- <preference name="android-maxSdkVersion" value="17" /> maximum Android 4.2 -->
+    <preference name="android-installLocation" value="auto" />
+    <preference name="splash-screen-duration" value="3000" />
+    <preference name="load-url-timeout" value="20000" />
+        
+    <!-- BLACKBERRY PREFERENCES -->
+        
+    <preference name="disable-cursor" value="false" />
+        
+    <!-- PHONEGAP API FEATURES PREFERENCES -->
+        
+    <preference name="permissions" value="none"/>
+
+</widget>
